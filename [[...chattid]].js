@@ -136,11 +136,9 @@ export const getServerSideProps= async (ctx) => {
   const chatId = ctx.params?.chatId?.[0] || null;
    
   if (chatId) {
-
-  
     const { user} = await getSession(ctx.req, ctx.res);
     const client = await clientPromise;
-    const db = client.db("ChitChat"); 
+    const db = client.db("Chit"); 
     const chat = await db.collection("chats").findOne({
       userId: user.sub,
       _id:new ObjectId(chatId),
@@ -160,37 +158,11 @@ export const getServerSideProps= async (ctx) => {
       };    
   }
   return {
-    props: {}
+    props: {
+      chatId: null,
+      title: null,
+      messages: [],
+    }
     
   };
 };
-
-export const getServerSideProps= async(ctx) =>{
-  const chatId = ctx.params?.chatId?.[0] || null;
-  if (chatId) {
-      const { user } = await getSession(ctx.req, ctx.res);
-      const client = await clientPromise;
-      const db = client.db("ChitChat");
-      const chat = await db.collections("chats").findOne({
-        userId:user.sub,
-        _id: new ObjectId(chatId),
-      });
-    return {
-      props:{
-          chatId,
-          title: chat.title,
-          messages: chat.messages.map((message) =>({
-           ...message,
-           _id: uuid(),
-          })),
-      },
-    };
-  }
-  return {
-    props: { 
-        chatId: null,
-        title: null,
-        messages: [],
-           }
-  }
-}
