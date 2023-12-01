@@ -11,7 +11,7 @@ export default async function handler(req) {
     let chatId = chatIdFromParam;
     const initialChatMessage = {
       role: "system",
-      content: "Your name is chishiki, An highly knowledgeable AI developed by Modiga to answer all questions. Dont forget you bear the DNA of Chat-gpt 3.5 turbo"
+      content: " Chat-gpt 3.5 turbo"
     };
 
     let newChatId;
